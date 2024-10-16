@@ -29,4 +29,9 @@ const userSchema = new mongoose.Schema(
         views: [{ type: String }],
         verified: { type: Boolean, default: false },
     },
+    { timestamps: true }
 )
+
+const Users = mongoose.model("Users", userSchema);
+
+export default Users;

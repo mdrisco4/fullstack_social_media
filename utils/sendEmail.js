@@ -1,6 +1,9 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
+import { hashString } from "./index.js";
+import Verification from "/models/emailVerification.js"
+import sendVerificationEmail from "../utils/sendEmail.js";
 
 dotenv.config();
 
@@ -46,5 +49,34 @@ export const sendVerificationEmail = async (user, res) => {
         </div>
     </div>`,
     };
-};
 
+    try {
+        const hashedToken = await hashString(token);
+
+        const newVerifiedEmail = await Verification.create({
+            userId: _id,
+            token: hashedToken,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 3600000,
+        });
+
+        if (newVerifiedEmail) {
+            transporter
+                .sendMail(mailOptions)
+                .then(() => {
+                    res.status(201).send({
+                        success: "PENDING",
+                        message:
+                            "Verification email has been sent to your email address.  Check your email to verify your account"
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(404).json({ message: "Seomthing went wrong" });
+        
+                });
+            }
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -9,7 +9,7 @@ const requestSchema = Schema(
     { timestamps: true }
 );
 
-const friendRequest = mongoose.model("friendRequest", requestSchema
+const FriendRequest = mongoose.model("friendRequest", requestSchema
 );
 
-export default friendRequest
+export default FriendRequest

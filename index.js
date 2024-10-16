@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 // SERUCITY PACKAGES
 import helmet from "helmet";
 import dbConnection from "./dbConfig/index.js";
+import errorMiddleware from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 
+// error middleware
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`)

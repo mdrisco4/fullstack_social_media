@@ -70,7 +70,7 @@ export const login = async (req, res, next) => {
         const isMatch = await compareString(password, user?.password);
 
             if(!isMatch) {
-                next("Invalide email or password");
+                next("Invalid email or password");
                 return;
             }
 

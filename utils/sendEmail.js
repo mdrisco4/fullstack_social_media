@@ -30,7 +30,7 @@ export const sendVerificationEmail = async (user, res) => {
         to: email,
         subject: "Email Verification",
         html: `<div
-        style='font-family: Arial, sans-sarif; font-size: 20px; color: #333; background-color: #f0ebeb'
+        style='font-family: Arial, sans-sarif; font-size: 20px; color: #333; background-color: #f7f7f7; padding: 20px; border-radius: 5px;'>
         <h1 style="color: rgb(8, 56, 188)">Please verify your email address</h1>
         <hr>
         <h4>Hi ${lastName},</h4>
@@ -72,11 +72,12 @@ export const sendVerificationEmail = async (user, res) => {
                 })
                 .catch((err) => {
                     console.log(err);
-                    res.status(404).json({ message: "Seomthing went wrong" });
+                    res.status(404).json({ message: "Something went wrong" });
         
                 });
             }
     } catch (error) {
         console.log(error);
+        res.status(404).json({ message: "Something went wrong" });
     }
-}
+};

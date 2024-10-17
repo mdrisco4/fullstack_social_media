@@ -1,7 +1,6 @@
 import Users from "../models/userModel.js"
-import { createJWT, hashString } from "../utils/index.js";
+import { compareString, createJWT, hashString } from "../utils/index.js";
 import { sendVerificationEmail } from "../utils/sendEmail.js";
-import { compareString } from "../utils/index.js";
 
 export const register = async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
@@ -35,8 +34,7 @@ export const register = async (req, res, next) => {
         console.log(error);
         res.status(404).json({ message: error.message });
     }
-
-}
+};
 
 export const login = async (req, res, next) => {
     const { email, password } = req.body;

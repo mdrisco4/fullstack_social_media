@@ -1,4 +1,3 @@
-// import bcrypt from "bcrypt.js";
 import bcrypt from "bcrypt";
 import JWT from "jsonwebtoken";
 
@@ -8,7 +7,6 @@ export const hashString = async (useValue) => {
     const hashedPassword = await bcrypt.hash(useValue, salt);
     return hashedPassword;
 };
-
 
 export const compareString = async (userPassword, password) => {
     const isMatch = await bcrypt.compare(userPassword, password);

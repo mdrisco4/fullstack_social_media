@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import Verification from "../models/emailVerification";
+import Verification from "../models/emailVerification.js";
 import Users from "../models/userModel.js";
-import { compareString } from "../utils";
+import { compareString } from "../utils/index.js";
 
 export const verifyEmail = async (req, res) => {
     const { userId, token } = req.params;
@@ -48,14 +48,12 @@ export const verifyEmail = async (req, res) => {
                             .catch((err) => {
                                 console.log(err);
                                 const message = "Verification failed or invalid link";
-                                res.redirect(
-                                    `/users/verified?status=error&message=${message}`
-                                );
+                                res.redirect(`/users/verified?status=error&message=${message}`);
                             });
                         } else {
                             // Invalid token
                             const message = "Verification failed or invalid link";
-                            res.redirect(`/users/verified?status=error&message=${message}`)
+                            res.redirect(`/users/verified?status=error&message=${message}`);
                         }
                     })
                     .catch((error) => {
@@ -69,8 +67,6 @@ export const verifyEmail = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: error.message });
+        res.redirect(`/users/verified?message=`);
     }
-
-
-}
+};

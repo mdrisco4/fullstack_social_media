@@ -22,7 +22,17 @@ const PORT = process.env.PORT || 8800;
 
 dbConnection();
 
-app.use(helmet());
+// app.use(helmet());
+
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'"]
+        }
+    }
+}));
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

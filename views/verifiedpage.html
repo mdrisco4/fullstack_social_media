@@ -57,7 +57,7 @@
     <div class="card">
         <div class="icon">
             <span id="statusIcon" class=""></span>
-        </div>>
+        </div>
         <div id="statusMessage" class=""></div>
         <!--Localhost -> deployed URL-->
         <a href="http://localhost/3000/login" id="btn" class="">Login</a>
@@ -68,6 +68,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const message = urlParams.get('message');
         const status = urlParams.get('status');
+        console.log(status)
 
         // Get the card, status icon and status message elements
         const card = document.querySelector('.card');

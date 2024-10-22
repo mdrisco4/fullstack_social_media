@@ -38,9 +38,7 @@ export const verifyEmail = async (req, res) => {
                             .then(() => {
                                 Verification.findOneAndDelete({ userId }).then(() => {
                                     const message = "User email verified";
-                                    res.redirect(
-                                        `/users/verified?status=success&message=${message}`
-                                    );
+                                    res.redirect(`/users/verified?status=success&message=${message}`);
                                 });
                             })
                             .catch((err) => {

@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 8800;
 dbConnection();
 
 // app.use(helmet());
-
+// changed security directives here to be able to properly execute verifiedpage.html
 app.use(helmet({
     contentSecurityPolicy: {
         directives: {

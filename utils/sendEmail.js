@@ -2,8 +2,8 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import { hashString } from "./index.js";
-import Verification from "../models/emailVerification.js"
-// import sendVerificationEmail from "../utils/sendEmail.js";
+import Verification from "../models/emailVerification.js";
+// import PasswordReset from "../models/PasswordReset.js";
 
 dotenv.config();
 
@@ -67,18 +67,6 @@ export const sendVerificationEmail = async (user, res) => {
             expiresAt: Date.now() + 3600000,
         });
 
-
-        // try {
-        //     await transporter.sendMail(mailOptions);
-        //     res.status(201).send({
-        //         success: "PENDING",
-        //         message: "Verification email has been sent to your email address. Check your email to verify your account"
-        //     });
-        // } catch (err) {
-        //     console.log("Error sending email:", err.message || err.response);
-        //     res.status(404).json({ message: "Something went wrong first" });
-        // }
-
         if (newVerifiedEmail) {
             transporter
                 .sendMail(mailOptions)
@@ -121,5 +109,33 @@ export const resetPasswordLink = async (user, res) => {
         <a href=${link} style="color: #fff; padding: 10px; text-decoration: none; background-color: #000;  border-radius: 8px; font-size: 18px; ">Reset Password</a>.
     </p>`,
     };
+    try {
+        const hashedToken = await hashPassword(token);
 
-}
+        const resetEmail = await PasswordReset.create({
+            userId: _id,
+            email: email,
+            token: hashedToken,
+            createdAt: Date.now(),
+            expiresAt: Date.now() + 600000,
+          });
+
+            if (resetEmail) {
+            transporter
+                .sendMail(mailOptions)
+                .then(() => {
+                    res.status(201).send({
+                        success: "PENDING",
+                        message: "Reset password link has been sent to your account.",
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.status(404).json({ message: "Seomthing went wrong 1" });
+                });
+            }
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: "Seomthing went wrong 2" });
+    }
+};

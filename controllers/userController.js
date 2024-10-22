@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import Verification from "../models/emailVerification.js";
 import Users from "../models/userModel.js";
 import { compareString } from "../utils/index.js";
+import PasswordReset from "../models/passwordReset.js";
+import { resetPasswordLink } from "../utils/sendEmail.js";
 
 export const verifyEmail = async (req, res) => {
     const { userId, token } = req.params;
@@ -66,3 +68,34 @@ export const verifyEmail = async (req, res) => {
         res.redirect(`/users/verified?message=`);
     }
 };
+
+
+export const requestPasswordReset = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const user = await Users.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                status: "FAILED",
+                message: "Email address not found.",
+            });
+        }
+
+        const exisitingRequest = await PasswordReset.findOne({ email });
+        if (exisitingRequest) {
+            if (exisitingRequest.expiresAt > Date.now()) {
+                return res.status(201).json({
+                    status: "PENDING",
+                    message: "Reset password link has been sent to your email.",
+                });
+            }
+            await PasswordReset.findOneAndDelete({ email });
+        }
+        await resetPasswordLink(user, res);
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+    }
+}

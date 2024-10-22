@@ -45,12 +45,12 @@ export const verifyEmail = async (req, res) => {
                             })
                             .catch((err) => {
                                 console.log(err);
-                                const message = "Verification failed or invalid link";
+                                const message = "Verification failed or invalid link 111";
                                 res.redirect(`/users/verified?status=error&message=${message}`);
                             });
                         } else {
                             // Invalid token
-                            const message = "Verification failed or invalid link";
+                            const message = "Verification failed or invalid link 222";
                             res.redirect(`/users/verified?status=error&message=${message}`);
                         }
                     })

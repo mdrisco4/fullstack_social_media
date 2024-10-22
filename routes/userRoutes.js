@@ -14,7 +14,7 @@ router.get("/verify/:userId/:token", verifyEmail)
 // PASSWORD RESET
 router.post("/request-passwordreset", requestPasswordReset);
 router.get("/reset-password/:userId/:token", resetPassword);
-router.post("/rest-password", changePassword)
+router.post("/reset-password", changePassword)
 
 router.get("/verified", (req, res) => {
     res.sendFile(path.join(__dirname, "views", "verifiedpage.html"))

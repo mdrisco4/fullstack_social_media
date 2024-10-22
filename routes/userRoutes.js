@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import { verifyEmail } from "../controllers/userController.js";
-import exp from "constants";
 
 const router = express.Router();
 const __dirname = path.resolve(path.dirname(""));

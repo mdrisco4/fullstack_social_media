@@ -19,9 +19,7 @@ export const verifyEmail = async (req, res) => {
                     Users.findOneAndDelete({ _id: userId })
                     .then(() => {
                         const message = "Verification token has expired";
-                        res.redirect(
-                            `/users/verified?status=error&message=${message}`
-                        );
+                        res.redirect(`/users/verified?status=error&message=${message}`);
                     })
                     .catch((err) => {
                         res.redirect(`/users/verified?status=error&message=`);

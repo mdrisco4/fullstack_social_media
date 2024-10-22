@@ -4,8 +4,8 @@ const emailVerificationSchema = Schema(
     {
         userId: String,
         token: String,
-        createdAt: String,
-        expiresAt: String,
+        createdAt: Date,
+        expiresAt: Date,
     }
 );
 

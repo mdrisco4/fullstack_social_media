@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import { hashString } from "./index.js";
 import Verification from "../models/emailVerification.js";
-// import PasswordReset from "../models/PasswordReset.js";
+import PasswordReset from "../models/passwordReset.js";
 
 dotenv.config();
 
@@ -110,7 +110,7 @@ export const resetPasswordLink = async (user, res) => {
     </p>`,
     };
     try {
-        const hashedToken = await hashPassword(token);
+        const hashedToken = await hashString(token);
 
         const resetEmail = await PasswordReset.create({
             userId: _id,

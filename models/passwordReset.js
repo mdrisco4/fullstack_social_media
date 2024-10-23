@@ -8,6 +8,9 @@ const passwordResetSchema = Schema({
         expiresAt: Date,
     });
 
-const PasswordReset = mongoose.model("PasswordReset", passwordResetSchema);
+// const PasswordReset = mongoose.model("PasswordReset", passwordResetSchema);
+
+// Check if the model already exists
+const PasswordReset = mongoose.models.PasswordReset || mongoose.model('PasswordReset', passwordResetSchema);
 
 export default PasswordReset;

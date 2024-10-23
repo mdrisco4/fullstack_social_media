@@ -178,8 +178,6 @@ export const likePost = async (req, res, next) => {
         res.status(404).json({ message: error.message })
     }
 };
-
-
 // Come back ~2.75 here
 export const likePostComment = async (req, res, next) => {
     const { userId } = req.body.user;
@@ -242,4 +240,22 @@ export const likePostComment = async (req, res, next) => {
         console.log(error);
         res.status(404).json({ message: error.message })
     }
+};
+
+export const CommentPost = async (req, res, next) => {
+    try {
+
+    } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: error.message });
+  }
+};
+
+export const replyPostComment = async (req, res, next) => {
+    try {
+
+    } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: error.message });
+  }
 };

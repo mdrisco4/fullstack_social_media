@@ -2,9 +2,12 @@ import express from "express";
 import userAuth from "../middleware/authMiddleware.js";
 import { 
         createPost, 
+        getComments, 
         getPost, 
         getPosts, 
-        getUserPost
+        getUserPost,
+        likePost,
+        likePostComment
     } from "../controllers/postController.js";
 
 const router = express.Router();
@@ -15,6 +18,13 @@ router.post('/create-post', userAuth, createPost);
 router.post("/", userAuth, getPosts);
 router.post("/:id", userAuth, getPost);
 
-router.post("/get-user-post/:id", userAuth, getUserPost)
+router.post("/get-user-post/:id", userAuth, getUserPost);
+
+// GET COMMENTS
+router.get("/comments/:postId", getComments);
+
+// LIKE AND COMMENT ON POSTS
+router.post("/like/:id", userAuth, likePost);
+router.post("/like-comment/:id/:rid?", userAuth, likePostComment);
 
 export default router;

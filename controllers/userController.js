@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Verification from "../models/emailVerification.js";
 import Users from "../models/userModel.js";
-import { compareString, createJWT } from "../utils/index.js";
+import { compareString, createJWT, hashString } from "../utils/index.js";
 import PasswordReset from "../models/passwordReset.js";
 import { resetPasswordLink } from "../utils/sendEmail.js";
 import FriendRequest from "../models/friendRequest.js";
@@ -169,7 +169,6 @@ export const getUser = async (req, res, next) => {
     try {
         const { userId } = req.body.user;
         const { id } = req.params;
-
 
         const user = await Users.findById(id ?? userId).populate({
             path: "friends",
@@ -363,19 +362,19 @@ export const acceptRequest = async (req, res, next) => {
 
 export const profileViews = async (req, res, next) => {
     try {
-    const { userId } = req.body.user;
-    const { id } = req.body;
+        const { userId } = req.body.user;
+        const { id } = req.body;
 
-    const user = await Users.findById(id);
+        const user = await Users.findById(id);
 
-    user.views.push(userId);
+        user.views.push(userId);
 
-    await user.save();
+        await user.save();
 
-    res.status(201).json({
-      success: true,
-      message: "Successfully",
-    });
+        res.status(201).json({
+            success: true,
+            message: "Successfully",
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -388,9 +387,27 @@ export const profileViews = async (req, res, next) => {
 
 export const suggestedFriends = async (req, res) => {
     try {
-
-    } catch {
-        
-    }
+        const { userId } = req.body.user;
+    
+        let queryObject = {};
+    
+        queryObject._id = { $ne: userId };
+    
+        queryObject.friends = { $nin: userId };
+    
+        let queryResult = Users.find(queryObject)
+          .limit(15)
+          .select("firstName lastName profileUrl profession -password");
+    
+        const suggestedFriends = await queryResult;
+    
+        res.status(200).json({
+          success: true,
+          data: suggestedFriends,
+        });
+      } catch (error) {
+        console.log(error);
+        res.status(404).json({ message: error.message });
+      }
 };
 

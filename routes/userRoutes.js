@@ -1,20 +1,19 @@
 import express from "express";
 import path from "path";
 import { 
-        verifyEmail, 
-        requestPasswordReset,
-        resetPassword, 
+        acceptRequest,
         changePassword,
-        getUser,
-        updateUser,
         friendRequest,
         getFriendRequest,
-        acceptRequest,
+        getUser,
         profileViews,
+        requestPasswordReset,
+        resetPassword, 
         suggestedFriends, 
+        updateUser,
+        verifyEmail, 
     } from "../controllers/userController.js";
 import userAuth from "../middleware/authMiddleware.js";
-import { profile } from "console";
 
 const router = express.Router();
 const __dirname = path.resolve(path.dirname(""));
@@ -27,15 +26,15 @@ router.get("/reset-password/:userId/:token", resetPassword);
 router.post("/reset-password", changePassword)
 
 // USER ROUTES
-router.post("get-user/:id?", userAuth, getUser);
-router.put("update-user", userAuth, updateUser);
+router.post("/get-user/:id?", userAuth, getUser);
+router.put("/update-user", userAuth, updateUser);
 
 // FRIENDS REQUESTS
 router.post("/friend-request", userAuth, friendRequest);
 router.post("/get-friend-request", userAuth, getFriendRequest);
 
 // ACCEPT/DENY FRIEND REQUEST
-router.post("accept-request", userAuth, acceptRequest);
+router.post("/accept-request", userAuth, acceptRequest);
 
 // VIEW PROFILE
 router.post("/profile-view", userAuth, profileViews);

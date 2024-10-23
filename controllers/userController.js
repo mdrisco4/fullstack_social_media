@@ -333,17 +333,20 @@ export const acceptRequest = async (req, res, next) => {
         );
 
         if (status === "Accepted") {
+            
             const user = await Users.findById(id);
+            console.log(user)
+
+            // user.friends.push(newRes?.requestFrom);
       
-            user.friends.push(newRes?.requestFrom);
-      
-            await user.save();
+            // await user.save();
       
             const friend = await Users.findById(newRes?.requestFrom);
+            console.log(friend)
+
+            // friend.friends.push(newRes?.requestTo);
       
-            friend.friends.push(newRes?.requestTo);
-      
-            await friend.save();
+            // await friend.save();
           }
       
           res.status(201).json({
@@ -373,7 +376,7 @@ export const profileViews = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
-            message: "Successfully",
+            message: "Successful view",
         });
     } catch (error) {
         console.log(error);

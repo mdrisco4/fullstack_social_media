@@ -316,7 +316,7 @@ export const getFriendRequest = async (req, res) => {
 
 export const acceptRequest = async (req, res, next) => {
     try {
-        const id = req.body.userId;
+        const id = req.body.user.userId;
 
         const { rid, status } = req.body;
 
@@ -337,16 +337,16 @@ export const acceptRequest = async (req, res, next) => {
             const user = await Users.findById(id);
             console.log(user)
 
-            // user.friends.push(newRes?.requestFrom);
+            user.friends.push(newRes?.requestFrom);
       
-            // await user.save();
+            await user.save();
       
             const friend = await Users.findById(newRes?.requestFrom);
             console.log(friend)
 
-            // friend.friends.push(newRes?.requestTo);
+            friend.friends.push(newRes?.requestTo);
       
-            // await friend.save();
+            await friend.save();
           }
       
           res.status(201).json({

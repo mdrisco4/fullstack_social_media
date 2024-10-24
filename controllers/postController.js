@@ -187,6 +187,7 @@ export const likePostComment = async (req, res, next) => {
     try {
         if (rid === undefined || rid === null || rid === 'false') {
             const comment = await Comments.findById(id);
+            console.log(comment);
 
             const index = comment.likes.findIndex((el) => el === String(userId));
 

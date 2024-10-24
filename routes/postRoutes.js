@@ -3,6 +3,7 @@ import userAuth from "../middleware/authMiddleware.js";
 import { 
         CommentPost,
         createPost, 
+        deletePost, 
         getComments, 
         getPost, 
         getPosts, 
@@ -30,5 +31,8 @@ router.post("/like/:id", userAuth, likePost);
 router.post("/like-comment/:id/:rid?", userAuth, likePostComment);
 router.post("/comment/:id", userAuth, CommentPost);
 router.post("/reply-comment/:id", userAuth, replyPostComment);
+
+// DELETE POST
+router.delete("/:id", userAuth, deletePost);
 
 export default router;
